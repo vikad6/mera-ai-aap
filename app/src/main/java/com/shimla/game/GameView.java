@@ -6,13 +6,13 @@ import android.view.SurfaceView;
 public class GameView extends SurfaceView implements Runnable {
     Thread thread; boolean playing; Paint paint; int screenX, screenY;
     float scootyX, scootyY, speed = 8; int score=0; boolean isJump=false; float jumpV=0;
-    Rect road; int[] obstacleX = {800, 1500, 2200}; int[] obstacleType={0,1,0};
+    android.graphics.Rect road; int[] obstacleX = {800, 1500, 2200}; int[] obstacleType={0,1,0};
     public GameView(Context c) {
         super(c);
-        DisplayMetrics dm = getResources().getDisplayMetrics();
+        android.util.DisplayMetrics dm = getResources().getDisplayMetrics();
         screenX = dm.widthPixels; screenY = dm.heightPixels;
         scootyX = 150; scootyY = screenY - 350;
-        paint = new Paint(); road = new Rect(0, screenY-250, screenX, screenY);
+        paint = new Paint(); road = new android.graphics.Rect(0, screenY-250, screenX, screenY);
     }
     public void run() {
         while(playing) { update(); draw(); sleep(); }
@@ -40,5 +40,5 @@ public class GameView extends SurfaceView implements Runnable {
     public boolean onTouchEvent(MotionEvent e){ if(e.getAction()==MotionEvent.ACTION_DOWN &&!isJump){ isJump=true; jumpV=-32; } return true; }
     public void pause(){ playing=false; try{thread.join();}catch(Exception e){} }
     public void resume(){ playing=true; thread=new Thread(this); thread.start(); }
-    static class DisplayMetrics extends android.util.DisplayMetrics{}
 }
+
