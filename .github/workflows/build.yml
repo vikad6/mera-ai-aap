@@ -5,26 +5,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Unzip project
-        run: |
-          unzip mera-ai.zip -d temp
-          shopt -s dotglob
-          cp -r temp/*/*. 2>/dev/null || cp -r temp/*. 2>/dev/null || true
-          rm -rf temp
-          ls -la
+      - name: Unzip
+        run: unzip -o mera-ai.zip && rm mera-ai.zip && ls -la
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '17'
-      - name: Setup Android SDK
+      - name: Setup Android
         uses: android-actions/setup-android@v3
-      - name: Build APK
-        run: |
-          chmod +x gradlew
-         ./gradlew assembleDebug
-      - name: Upload APK
+      - name: Build
+        run: chmod +x gradlew &&./gradlew assembleDebug
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: mera-ai-apk
+          name: apk
           path: app/build/outputs/apk/debug/app-debug.apk
