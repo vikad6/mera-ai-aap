@@ -6,7 +6,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Unzip
-        run: unzip -o mera-ai.zip && rm mera-ai.zip && mv */*. 2>/dev/null || true && ls -la
+        run: |
+          ls -la
+          unzip -o "*.zip"
+          rm -f *.zip
+          ls -la
+          if [ -f "Mera Ai Aap-Source code/gradlew" ]; then mv "Mera Ai Aap-Source code"/*. && mv "Mera Ai Aap-Source code"/.*. 2>/dev/null || true; fi
+          F=$(find. -name gradlew -type f | head -n 1); echo "found $F"; D=$(dirname "$F"); if [ "$D"!= "." ]; then cp -r $D/*. 2>/dev/null || true; cp -r $D/.*. 2>/dev/null || true; fi
+          ls -la
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
